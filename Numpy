@@ -1,1 +1,14 @@
-
+#numpy ndarray 对象
+#######################单一维度
+import numpy as np
+a = np.array([1,2,3])
+print(a)
+type(a)
+########################多维度
+import numpy as np
+a = np.array([[1,2],[3,4]])
+print(a)
+###########################规定内部参数类型
+import numpy as np
+a = np.array([1,2,3],dtype = complex)
+print(a)
