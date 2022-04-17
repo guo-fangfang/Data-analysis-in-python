@@ -12,3 +12,95 @@ print(a)
 import numpy as np
 a = np.array([1,2,3],dtype = complex)
 print(a)
+######################创建结构化数据类型（类型模板）可实现一次性定义内部数据类型
+import numpy as np
+dt = np.dtype(np.int32)
+print(dt)
+
+dt = np.dtype("i4")
+print(dt)
+
+dt = np.dtype("<i4")
+
+#such as 
+dt = np.dtype([("age",np.int8)])#构建结构化数据类型
+print(dt)
+
+dt = np.dtype([("age",np.int8)])
+a = np.array([(10,),(20,),(30,)],dtype = dt)#将数据类型应用到该对象
+print(a)
+print(a["age"])
+
+student = np.dtype([('name','S20'),('age','i1'),('marks','f4')])
+print(student)
+a = np.array([("abc",21,50),("xyz",18,75)],dtype = student)
+print(a)
+########################数组属性
+import numpy as np #ndim
+a = np.arange(24)
+print (a)
+print(a.ndim)
+b = a.reshape(2,4,3)
+print(b)
+print(b.ndim)
+
+a = np.array([[1,2,3],[4,5,6]])#shape
+print(a.shape)
+
+b = a.reshape(3,2)#reshape
+
+x = np.array([1,2,3,4,5],dtype = np.int8)
+print(x.itemsize)
+y = np.array([1,2,3,4,5],dtype = np.float64)
+print(y.itemsize)
+
+x  = np.array([1,2,3,4,5])#flags
+print(x.flags)
+
+#######################创建数组
+#创建空数组
+import numpy as np 
+x = np.empty([3,2],dtype = np.int8)
+#创建0数组
+x = np.zeros(5)
+y = np.zeros(5,dtype=np.int8)
+z = np.zeros([2,2],dtype = [("x","i4"),("y",'f4')])
+print((x,y,z))
+#创建1数组
+x = np.ones(5)
+x = np.ones([2,2],dtype = int32)
+#######################从已有的数组创建数组
+x = [1,2,3]
+y = (1,2,3)
+z = [(1,2,3),(4,5)]
+a = np.asarray(x)
+b = np.asarray(y)
+c = np.asarray(z)#asarray
+
+s = b"Heelo"
+a = np.frombuffer(s,dtype='S1')#动态数组
+
+list = range(5)
+it = iter(list)
+x = np.fromiter(it,dtype = int)
+print(x)
+
+#############################从数值范围创建数组
+x = np.arange(5,dtype= float)
+x = np.linspace(1,20,10)#等差数列
+x_ = np.linspace(1,20,10).reshape([2,5])#等差数列
+y = np.logspace(1,2,num=10)
+y_ = np.logspace(0,9,base=2)
+
+#################################切片和索引
+#切片索引既可以使用分号也可以使用冒号
+a = np.arange(10)
+s = slice(0,5,2)
+print(a[s])
+s_ = a[0:5:2]
+print(s_)
+
+a = np.array([[1,2,3],[4,5,6],[7,8,9]])
+print(a)
+print(a[1:])
+print(a[1:,])
