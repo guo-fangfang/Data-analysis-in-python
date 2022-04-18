@@ -178,3 +178,204 @@ a = a.reshape(3,4)
 b = np.array([1,2,3,4],dtype = int)
 for x,y in np.nditer([a,b]):
 	print("%d:%d" % (x,y),end = ",")
+
+###############################对数组的操作
+'''
+1.修改数组形状
+2.翻转数组
+3.修改数组维度
+4.连接数组
+5.分割数组
+6.数组元素的添加和删除
+'''
+#将Ndarray按行处理访问改成按元素一个个访问
+a = np.arange(9).reshape(3,3)
+print(a)
+for x  in a :
+	print(x,"\n")#按照行访问，只针对ndarray数据
+
+for element in a.flat:
+	print(element)
+#拷贝一份数据,flatten(),拷贝数据改变，原数据不改变
+a = np.arange(8).reshape(2,4)
+b = a.flatten()
+c = a.flatten(order="F")
+print(a,"\n")
+print(b,"\n")
+print(c)
+	
+#ravel()，修改后会改变原数组的值
+ a = np.arange(8).reshape(2,4)
+ b = a.ravel()
+ c = a.ravel(order = "F")
+ print(a,"\n")
+ print(b,"\n")
+ print(c)
+ b[1]=100
+ print(a,"\n")#a的值已经改变
+ print(b)
+#################翻转数组
+#兑换数组维度transpose()
+a = np,arange(12).reshape(3,4)
+b = np.transpose(a)
+#转置
+c = a.T
+#按轴滚动,轴1为高度，轴2为宽度，轴0 为深度
+a = np.arange(8).reshape(2,2,2)
+b = np.rollaxis(a,2,0)#轴2滚动到轴0
+#交换轴，np.swapaxes()
+#######################修改数组维度
+"""
+broadcast():
+broadcast_to()
+expand_dims()
+squeeze()
+"""
+#broadcast_to
+a = np.arange(4).reshape(1,4)
+b = np.broadcast_to(a,(4,4))#实现自我复制成4*4shape 的数组
+#expand_dims(arr,axis)
+x = np.array([[1,2],[3,4]])
+y = np.expand_dims(x,axis = 0)
+print(y,'\n')
+print(x.shape,y.shape)
+y1 = np.expand_dims(x,axis = 1)
+print(x.shape,y1.shape)#(0,1,2)轴的顺序
+#squeeze(arr,axis)只能用于删除一维所在条目
+x = np.arange(9).reshape(3,3,1)
+y = np.squeeze(x)
+y1 = np.squeeze(x,2)
+print(y,"\n",y1)
+####################################连接数组
+'''
+np.concatenate((a1,a2,a3....),axis)axis = 0/1/2....
+np.stack()
+np.hstack()
+np.vstack()
+'''
+#example 1----np.concatenate,只能用于数组shape相同的情况，新的数组维度和原数组保持一致
+a = np.array([[1,2],[3,4]])
+b = np.array([[5,6],[7,8]])
+c1 = np.concatenate((a,b),axis=0)
+c2 = np.concatenate((a,b),axis=1)
+print(c1,"\n",c2)
+
+x = np.arange(27).reshape(3,3,3)
+y = np.arange(28,55).reshape(3,3,3)
+z1 = np.concatenate((x,y),axis=0)
+z2 = np.concatenate((x,y),axis=1)
+z3 = np.concatenate((x,y),axis=2)
+print(x,"\n")
+print(y,"\n")
+print(z1,"\n"**2,z2,"\n"**2,z3)
+#example 2 -----np.stack(arr,axis)用于沿新轴堆叠，会导致新的数组维度+1
+z1 = np.stack((a,b),axis = 0)#沿着0轴堆叠，维度+1
+z2 = np.stack((a,b),axis = 1)
+print(z1)
+print(z1.shape)
+print(z2)
+print(z2.shape)
+#example 3&4--------hstack()andvstack() 属于stack的变种
+#example3 hstack  沿水平方向堆叠
+d1 = np.hstack((a,b))
+#example4 vstack 沿竖直方向堆叠
+d2 = np.vstack((a,b))
+###########################数组的分割
+'''
+split()
+hsplit():从水平方向上按列分割
+vsplit()：从竖直方向上按行分割
+'''
+# example 1----split(arr,indices_or_sections,axis)
+#axis = 0,等价于水平切分（按列方向），axis =竖直方向切分
+a = np.arange(9)
+b1 = np.split(a,3)#用3平均切分
+b2 = np.split(a,[4,7])#用数组所在位置切分，左开右闭
+
+a = np.arange(16).reshape(4,4)
+c1 = np.split(a,2,axis = 0)
+c1_ = np.vsplit(a,2)#axis=vsplit
+c2 = np.split(a,2,axis = 1)
+c2_ = np.hsplit(a,2)
+print(a)
+print("************")
+print(c1)
+print("************")
+print(c1_)
+print("************")
+print(c2)
+print("************")
+print(c2_)
+
+########################数组元素的添加与删除
+'''
+resize()
+append()
+insert()
+delete()
+unique()
+'''
+#np.resiez(arr,shape),append()函数只能沿着轴添加元素
+#np.append(arr,value,axis)axis=0/1/none;当为None时则返回一维数组
+a = np.array([[1,2,3],[4,5,6]])
+print(a)
+print("向数组中添加元素，且没有指定要添加的axis")
+b = np.append(a,[7,8,9])
+print(b,"\n")
+print("沿着0轴添加元素")
+b1 = np.append(a,[[7,8,9]],axis = 0)
+print(b1,"\n")
+print("沿着1轴添加元素")
+b2 = np.append(a,[[5,5,5],[7,8,9]],axis = 1)
+print(b2)
+#append函数虽然能够插入但是只能顺序插入，想要随意插入得用insert函数
+#np.insert(arr,obj,values,axis),obj表示要插入的位置，
+a = np.array([[1,2],[3,4],[5,6]])
+print("原数组：",a)
+b = np.insert(a,3,[11,12])
+print(b)
+b1 = np.insert(a,1,[11,12],axis = 0)
+b2 = np.insert(a,1,[11,12,13],axis = 1)
+print("b1:",b1,"\n","b2:",b2)#如果插入数值不够就会沿着轴广播
+
+#np.delete(arr,obj,axis),沿着指定轴删除指定位置的值
+a = np.arange(12).reshape(3,4)
+print("****原始数值****")
+print("未传递参数")
+b1 = np.delete(a,5)#删除5号位置的值
+print("b1:")
+print(b1)
+print("按照列方向删除")
+b2  = np.delete(a,2,axis=1)#删除第二列的值
+print(b2)
+print("按照行方向删除")
+b3 = np.delete(a,2,axis = 0)#删除第二行的值
+print(b3)
+print("使用切片")
+a = np.array([1,2,3,4,5,6,7,8,9,10])
+b4 = np.delete(a,np.s_[::2])
+print(b4)
+b5 = np.delete(a,np.s_[::3])
+print("b5:",b5)
+#np.unique(arr,return_index,return_inverse,return_counts)
+'''
+return_index:返回新列表旧坐标
+return_inverse:返回旧列表新坐标
+return_counts:返回频数
+'''
+a = np.array([1,1,2,2,3,4,5,6,6,6,7,8,9,9,9,9])
+print("原数组：")
+print(a)
+print("去重后的数组")
+print(np.unique(a))
+print("返回新列表的旧坐标")
+b,indexs = (np.unique(a,return_index=T))
+print("b:",b)
+print(indexs)
+print("返回旧元素新坐标")
+b1,indexs_1=(np.unique(a,return_inverse=T))
+print("b1:",b1)
+print(indexs_1)
+print("返回频数")
+b2,counts = np.unique(a,return_counts=T)
+print(counts)
