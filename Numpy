@@ -431,3 +431,160 @@ print(np.char.join("-",['I',"like",'running']))
 print(np.char.join(["-","#"],["like",'running']))#对应连接
 #np.char.replace(arr,old,new)
 print(np.char.replace("i like python","python","JAVA"))
+#######################################数学函数
+#np.floor()向下取整
+#np.ceil()向上取整
+#######################################算数函数
+'''
+add()
+subtract()
+multiply()
+divide()
+'''
+a = np.arange(9,dtype=np.float).reshape(3,3)
+print(a)
+b = np.array([10,11,12])
+c1 = np.add(a,b)
+c2 = np.subtract(a,b)
+c3 = np.multiply(a,b)
+c4 = np.divide(a,b)
+print(a,"\n")
+print(c1,"\n")
+print(c2,"\n")
+print(c3,"\n")
+print(c4,"\n")
+'''
+np.reciprocal()返回元素倒数
+np.power()
+np.mod()求余数
+'''
+a= np.array([0.25,1.33,2,100])
+print(np.reciprocal(a))
+
+b = np.array([10,100,1000])
+c = np.array([3,2,1])
+print(np.power(b,c))
+##############################统计函数
+'''
+np.amin():用于多维数组求最值，可沿轴和不沿轴
+np.amax()
+np.ptp():计算一组数据极差,可以指定沿着哪个轴
+np.percentile(arr,q,axis):求百分位数
+np.median():按照轴计算中位数
+np.mean():按照轴计算简单算数平均数
+np.average():计算加权算数平均数
+np.std():标准差
+np.var():方差
+'''
+a = np.array([[3,7,5],[8,4,3],[2,4,9]])
+print("数组a:","\n",a)
+print("沿着1轴求最小值","\n")
+print(np.amin(a,1))
+print("沿着0轴求最小值","\n")
+print(np.amin(a,0))
+print("沿着1轴求最大值","\n")
+print(np.amax(a,1))
+print("沿着0轴求最大值","\n")
+print(np.amax(a,0))
+print("若没有指定轴，获取最大/小值")
+print(np.amax(a))
+print(np.amin(a))
+
+a = np.array([[3,7,5],[8,4,3],[2,4,9]])
+print("原数组:","\n",a)
+print("不指定轴，求全部数据的极差")
+print(np.ptp(a))
+print("沿着1轴计算极差")
+print(np.ptp(a,axis=1))
+print("沿着0轴计算极差")
+print(np.ptp(a,axis = 0))
+
+a = np.array( np.random.normal(0,1,24)).reshape(4,6)
+print("求全部数据的25%，50%，75%分位数：")
+a_25 = np.percentile(a,25)
+a_50 = np.percentile(a,50)
+a_75 = np.percentile(a,75)
+print("25%分位数：",a_25,"\n")
+print("50%分位数：",a_50,"\n")
+print("75%分位数：",a_75,"\n")
+print("从轴0，列上求50%分位数")
+print(np.percentile(a,50,axis=0))
+print("从轴1，行上求50%分位数")
+print(np.percentile(a,50,axis=1))
+
+b = np.array(np.random.normal(1,1,24)).reshape(4,6)
+print("求全部数据的中位数：")
+print(np.median(b),"\n")
+print("沿着0轴，列方向求中位数")
+print(np.median(b,axis=0))
+print("沿着1轴，行方向求中位数")
+print(np.median(b,axis = 1))
+
+a = np.array([1,2,3,4,5])
+weight = np.array([4,3,2,1,1])
+b = np.average(a,weights = weight)
+print(b)
+
+#######################排序、按照条件选择函数
+############排序########
+'''
+quicksort
+mergesort
+heapsort
+'''
+#np.sort(arr,axis,kind,order)默认kind 为quicksort
+a = np.array([[3,7],[9,1]])
+print("没有指定轴的全排序")
+print(np.sort(a))
+print("按照0轴即列排序")
+print(np.sort(a,axis = 0))
+#有多种数据类型的时候可用oder规定按照什么数据排序
+dt = np.dtype([("name","S10"),("age","int")])
+a = np.array([("raju",21),("anil",25),("amar",27),("ravi",17)],dtype = dt)
+print("按照name排序")
+print(np.sort(a,order = "name"))
+
+#np.argsort(),返回数值按从小到大排序后的索引值
+x = np.array([1,5,2,9,3,0,7])
+index = np.argsort(x)#得到索引值
+y1 = x[index]#得到从小到大排序的数列
+
+#np.lexsort(),同时对几个序列进行排序得到索引值
+a = ("raju","anil","ravi","amar")
+b = ("f.y.","s.y.","s.y.","f.y.")
+index = np.lexsort((a,b))#自动优先按照最后一列来排序
+for i in index:
+	print(a[i]+","+b[i])
+	print(np.char.multiply("*",10))
+
+'''
+np.msort():按照第一个轴排序
+np.sort_complex():先实部后虚部排序
+np.partition():指定数据对数组分割
+argpartition():指定算法和轴对数据分割
+np.argmax():指定轴返回最大值的索引
+np.argmin():
+带arg的返回的基本是索引
+np.nonzero():返回非零元素索引
+'''
+a = np.array([[0,1,2],[0,4,6],[3,0,9]])
+index = np.nonzero(a)
+print("非零元素")
+b = a[index]
+print("零元素")
+b = a[a==0]
+
+'''
+np.where():获得条件索引
+np.extract():可以用于定义更加复杂的一些条件,直接得到值
+'''
+x = np.arange(9).reshape(3,3)
+index = np.where(x>3)
+print(x[index])
+print("\n")
+print(x[x>3])
+
+condition  = np.mod(x,2)==0
+y = np.extract(condition,x)
+print(y,"\n")
+print(x[np.mod(x,2)==0])
