@@ -588,3 +588,36 @@ condition  = np.mod(x,2)==0
 y = np.extract(condition,x)
 print(y,"\n")
 print(x[np.mod(x,2)==0])
+##################线性代数
+'''
+np.dot(a,b):
+np.vdot()
+np.inner()
+np.matmul()
+np.determinant()
+
+'''
+#np.dot(a,b):一维事为对应和，二维时按照矩阵乘法计算得到一个矩阵
+#np.vdot():计算点积
+a = np.array([1,2,3,4,5])#一维情况下
+b = np.array([0,9,8,4,2])
+c = np.vdot(a,b)
+print(c)
+
+a = np.array([[1,2],[3,4]])#二维情况下仍然为一个数字，表现为对应元素相乘再相加
+b = np.array([[11,12],[13,14]])
+c1 = np.vdot(a,b)
+print(c1)
+
+#np.inner(),返回一维数组内积，高维度返回最后一个轴上的和的乘积
+a = np.inner(np.array([1,2,3]),np.array([0,1,0]))
+print(a)#等价于 np.dot/np.vdot
+
+a = np.array([[1,2],[3,4]])
+b = np.array([[11,12],[13,14]])
+c = np.inner(a,b)
+print(c)
+#np.matmul 返回矩阵乘积
+#np.linalg.det(),返回行列式
+#np.linalg.solve(),返回线性方程解
+#np.linalg.inv()，返回逆矩阵
