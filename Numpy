@@ -379,3 +379,55 @@ print(indexs_1)
 print("返回频数")
 b2,counts = np.unique(a,return_counts=T)
 print(counts)
+##################################位运算
+#example 1 ,&:二进制同为1才为1，否则为0
+import numpy as np
+print("13和17的二进制形式")
+a,b = 13,17
+print(bin(a),bin(b))
+print("\n")
+print("13和17的位与：")
+print(np.bitwise_and(13,17))
+#example 2 ,| 参与运算的二进制只要有一个为1，结果为1
+print(np.bitwise_or(13,17))
+#example 3 ,^:参与运算的两个对应位不同则为1
+print(a^b)
+#example 4----invert(),二进制中0->1,1->0
+print(np.invert(np.array([13],dtype = np.uint8)))
+print(bin(13))
+print(bin(242))
+#left_shift()/np.right_shift
+print(np.left_shift(10,2))#将10左移两个位置
+print(np.binary_repr(10,width=8))
+print(np.binary_repr(40,width=8))
+################################字符串函数
+#np.char.add()
+import numpy as np
+print(np.char.add(["hello"],["xyz"]))#最简单的首尾连接
+print(np.char.add(["hello","hi"],["abc","xyz"]))#对应位置上的元素首尾连接
+#np.char.multiply(),起到重复的作用
+print(np.char.multiply("runoob",3))
+print(np.char.multiply("*",10))
+#np.char.center(str,width,fillchar)起到一个调整格式的作用
+print(np.char.center("hello",20,fillchar = "*"))
+#np.char.capitalize(),字符串首字母大写
+print(np.char.capitalize("hello"))
+print(np.char.center(np.char.capitalize("hello"),20,fillchar = "*"))
+#np.char.title(),将每个单词词首字母大写
+print(np.char.title("i love computer"))
+print(np.char.center(np.char.title("i love computer"),30,fillchar = "*"))
+#np.char.lower()/np.char.upper()
+#np.char.split()默认分隔符为空格
+print(np.char.split("i like python"))#默认空格
+print(np.char.split("i,like,python",sep = ","))#指定为逗号
+#np.char.splitlines()明确规定以换行符分割
+print(np.char.splitlines("i like\nbobo"))
+#np.char.strip()只能用于移除开头或结尾处的特定字符
+print(np.char.strip("ai like running","a"))
+print(np.char.strip("i like runninga","a"))
+#np.char.join(),使用指定的符号来连接元素
+print(np.char.join(":","python"))
+print(np.char.join("-",['I',"like",'running']))
+print(np.char.join(["-","#"],["like",'running']))#对应连接
+#np.char.replace(arr,old,new)
+print(np.char.replace("i like python","python","JAVA"))
