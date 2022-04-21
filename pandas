@@ -1,1 +1,62 @@
+#############数据清洗###################
+'''
+DataFrame.dropna(axis = 0/1,how ="any"/all,thresh,subset=None,inplace=Flase)
+thresh:需要多少非空数值才能保留一行
+subset:想要检查的列
+inplace
+'''
+#使用isnull()检查各个单元格是否为空
+print(data["NUM_BEDROOMS"])
+print(data["NUM_BEDROOMS"].isnull())
+print(data.isnull())
+#自己设置哪些情况是空
+missing_values = ["n/a","na","NAN","--"]
+f = open("C:/Users/郭芳芳/Desktop/property-data.csv")
+data1 = pd.read_csv(f,na_values = missing_values)
+#删除包含空值的行
+data2 = data1.dropna()
+print(data2)
+data2.info()
+#填充全部空的数值
+data3 = data1.fillna(1000)
+#对某一行的空值进行填充
+data1["PID"].fillna(1000000,inplace=True)
+#使用mean/median/mode值对空值进行填充
+import pandas as pd
+missing_values = ["n/a","na","NAN","--"]
+f  = open("C:/Users/郭芳芳/Desktop/property-data.csv")
+data = pd.read_csv(f,na_values = missing_values)
+x = data["ST_NUM"].mean()
+data["st_NUM"].fillna(x,inplace = True)
+data["PID"][4] = 100004000.0
+y  = data["ST_NUM"].median()
+data["ST_NUM"].fillna(y,inplace = True)
+z = data["ST_NUM"].mode()
+data["ST_NUM"].fillna(z,inpalce = True)
+#清洗时间格式错误数据
+test = {"Data":['2020/12/01','2020/12/02','20201226'],"duration":[50,40,45]}
+df  = pf.DataFrame(test,index = ["day1","day2","day3"])
+df['Data'] = pd.to_datetime(df["Date"])#转化成时间
+#修改错误数据
+person = {
+"name":["Google","Runoob","Taobao"],
+"age":[50,200,12345]
+}
+
+df = pd.DataFrame(person)
+df.loc[2,"age"] = 30
+#or df["age"][2] = 30
+
+for x  in df.index:
+	if df.loc[x,"age"]>120:
+		df.loc[x,"age"]=120
+
+#清洗重复数据
+
+person = {
+"name":["Google","Runoob","Runoob","Taobao"],
+"age":[50,40,40,23]
+}
+df = pd.DataFrame(person)
+df.drop_duplicates(inplace = True)
 
